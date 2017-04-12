@@ -20,9 +20,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-var webIp = '10.99.0.15';
+var ip = {
+	web: '10.99.0.15',
+	landingPage: '10.99.0.17'
+};
 
-app.use(subdomain('lantern', proxy(webIp + '/lantern', '/')));
-app.use(proxy(webIp + '/thresh', '/'));
+app.use(subdomain('lantern', proxy(ip.web, '/')));
+app.use(proxy(ip.landingPage, '/'));
 
 module.exports = app;

@@ -3,7 +3,8 @@
  */
 var express = require('express');
 var router = express.Router();
-var ip = require('./lantern-ip');
+var proxy = require('proxy-express');
+var ip = require('../lantern-ip');
 
 module.exports = function(){
 

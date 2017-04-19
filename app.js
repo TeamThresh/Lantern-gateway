@@ -17,7 +17,7 @@ app.use(cookieParser());
 
 var ip = require('./lantern-ip');
 
-app.use(subdomain('lantern', router));
+app.use(subdomain('lantern', router()));
 app.use(subdomain('query', proxy(ip.query, '/')));
 app.use(proxy(ip.landingPage, '/'));
 

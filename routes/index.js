@@ -18,8 +18,7 @@ module.exports = function(){
 			}
 
 			return callback();
-		},
-		log: true
+		}
 	}));        // 데이터 업로드
 
 	// catch 404 and forward to error handler
@@ -32,8 +31,7 @@ module.exports = function(){
 			}
 
 			return callback();
-		},
-		log: true
+		}
 	}));
 
 	return router;

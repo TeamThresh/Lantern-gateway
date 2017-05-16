@@ -8,12 +8,34 @@ var ip = require('../lantern-ip');
 
 module.exports = function(){
 
-  // User registration
-  router.all('/api/*', proxy(ip.query, '/'));        // 데이터 업로드
+	// User registration
+	router.all('/api/*', proxy(ip.query, {
+		pre : function (proxyObj, callback) {
+			if (proxyObj.req.headers['content-type'] == "application/json") {
+				proxyObj.reqOpts.headers['content-length'] = JSON.stringify(proxyObj.req.body).length;
+				proxyObj.reqOpts.json = proxyObj.req.body;
+				proxyObj.req.body = undefined;
+			}
 
-  // catch 404 and forward to error handler
-  router.all('/*', proxy(ip.web, '/'));
+			return callback();
+		},
+		log: true
+	}));        // 데이터 업로드
 
-  return router;
+	// catch 404 and forward to error handler
+	router.all('/*', proxy(ip.web, {
+		pre : function (proxyObj, callback) {
+			if (proxyObj.req.headers['content-type'] == "application/json") {
+				proxyObj.reqOpts.headers['content-length'] = JSON.stringify(proxyObj.req.body).length;
+				proxyObj.reqOpts.json = proxyObj.req.body;
+				proxyObj.req.body = undefined;
+			}
+
+			return callback();
+		},
+		log: true
+	}));
+
+	return router;
 };
 
